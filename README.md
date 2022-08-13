@@ -4,6 +4,12 @@ Using
 - aspnet minimal APIs
 - honeycomb.io
 
+For each valid request, this minimal API will produce a trace and export it to Honeycomb.io.
+
+This trace should include
+- a span for the outbound HTTP request to wikipedia.org
+- a custom span for the parsing of the JSON result
+
 # Getting Started
 
 1. Sign up for a free account with [Honeycomb.io](https://www.honeycomb.io/)
@@ -14,7 +20,7 @@ Using
 
 ```sh
 dotnet run
-curl https://localhost
+curl https://localhost:5001/wikipedia/London
 ```
 
 ## Certificates
