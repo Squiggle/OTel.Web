@@ -18,10 +18,9 @@ static async Task<string> Lookup(string name)
     client.DefaultRequestHeaders.Add("User-Agent", "Learning-Demo-Client");
     var response = await client.GetStringAsync($"https://en.wikipedia.org/api/rest_v1/page/summary/{name}?redirect=false");
 
-    using (var span = TracerProvider.Default.GetTracer("my-app").StartActiveSpan("parse-response"))
-    {
-      span.SetAttribute("wikipedialookup.name", name);
-      return JsonNode.Parse(response)?["extract"]?.GetValue<string>() ?? "";
-    }
+    using var span = TracerProvider.Default.GetTracer("my-app").StartActiveSpan("parse-response");
+    System.Diagnostics.Trace.WriteLine("Testing System.Diagnostics.Trace");
+    span.SetAttribute("wikipedialookup.name", name);
+    return JsonNode.Parse(response)?["extract"]?.GetValue<string>() ?? "";
   }
 }
